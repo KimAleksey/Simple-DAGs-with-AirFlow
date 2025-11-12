@@ -44,8 +44,7 @@ with DAG(
 
     t1 >> t3
     t2 >> t3
-    t3 >> t4
-    t4 >> t5
+    t3 >> [t4, t5]
 
 with DAG(dag_id="demo", start_date=datetime(2022, 1, 1), schedule="0 0 * * *") as dag2:
 
