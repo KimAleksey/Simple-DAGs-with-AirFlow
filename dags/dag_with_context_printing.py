@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from airflow.decorators import task
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-
+from textwrap import dedent
 
 def get_dag_context(**kwargs):
     ti: TaskInstance = kwargs["task_instance"]
@@ -44,6 +44,11 @@ with DAG(
         task_id='task1', python_callable=get_dag_context
     )
 
+    task1.doc_md = """
+    Документациия к функции
+    Да, я самая пиздатая функция, понятно вам?!
+    """
+
     task2 = BashOperator(
         task_id='task2', bash_command='echo "After python function"'
     )
@@ -52,4 +57,19 @@ with DAG(
         task_id='task3', bash_command='date'
     )
 
-    task1 >> [task2, task3] >> print_dag_ending()
+    templated_command = dedent(
+    """
+    {% for i in range(5) %}
+        echo "{{ ds }}"
+        echo "{{ macros.ds_add(ds, 7)}}"
+    {% endfor %}
+    """
+    )
+
+    task4 = BashOperator(
+        task_id="templated",
+        depends_on_past=False,
+        bash_command=templated_command,
+    )
+
+    task1 >> [task2, task3] >> print_dag_ending() >> task4
