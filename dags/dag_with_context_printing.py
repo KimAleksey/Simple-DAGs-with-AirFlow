@@ -17,6 +17,9 @@ def get_dag_context(**kwargs):
     print(f"Dag started at {dr.start_date}")
     print(f"Dag hash {dr.dag_hash}")
 
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
 
 @task()
 def print_dag_ending():
