@@ -4,7 +4,6 @@ from airflow.decorators import task
 from airflow.providers.http.hooks.http import HttpHook
 from pendulum import datetime
 
-
 @task.python
 def get_ip_from_api():
     hook = HttpHook(method='GET', http_conn_id='ipify_api')
