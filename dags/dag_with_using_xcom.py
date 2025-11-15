@@ -3,11 +3,15 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 from requests import get
 from pandas import DataFrame
-from os import path
+from os import path, getenv
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path="/opt/airflow/config/.env")
+API_KEY = getenv('API_KEY')
+url = f"http://api.weatherapi.com/v1/current.json?key={API_KEY}&q=Moscow"
 
 def extract(**context):
-    API_KEY = "3bffb37f9aa74627a73212454251311"
-    url = f"http://api.weatherapi.com/v1/current.json?key={API_KEY}&q=Moscow"
+    print(url)
     request = get(url)
     context['ti'].xcom_push(key='weather_data_json', value=request.json())
 
