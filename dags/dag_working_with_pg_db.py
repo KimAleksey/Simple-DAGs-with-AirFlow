@@ -159,7 +159,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-with DAG(dag_id='working_with_pg_db', catchup=False, schedule_interval='@daily', default_args=default_args) as dag:
+with DAG(dag_id='working_with_pg_db', catchup=False, schedule_interval=timedelta(days=1), default_args=default_args) as dag:
 
     empty_task = EmptyOperator(task_id='empty_task')
 
