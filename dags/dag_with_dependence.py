@@ -30,7 +30,7 @@ with DAG(dag_id='dag_with_dependence',
     wait_for_extract = ExternalTaskSensor(
         task_id="wait_for_extract",
         external_dag_id="working_with_pg_db",
-        external_task_id="delete_old_files_from_data_folder",
+        external_task_id="delete_old_files_from_data_folder", # None - Ждать выполнения всего DAG
         allowed_states=['success'],
         failed_states=['failed'],
     )
