@@ -1,6 +1,6 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from pendulum import now, duration
+from pendulum import now
 from airflow.sensors.external_task import ExternalTaskSensor
 from airflow.operators.empty import EmptyOperator
 from datetime import timedelta, datetime
