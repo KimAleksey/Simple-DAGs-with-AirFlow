@@ -141,11 +141,12 @@ def delete_old_files(**context):
         print("With option: No old files deleted.")
         return None
     else:
-        today_date_str = now().date().add(months=-3).to_date_string().replace('-', '_')
+        today_date_str = now().date().add(months=-1).to_date_string()
         folder_path = "/opt/airflow/data"
         files = [file for file in listdir(folder_path) if 'flights_' in file]
         for file in files:
-            if today_date_str in file:
+            file_date = file.split('-')[0].replace('flights_', '').replace('_', '-')
+            if file_date < today_date_str:
                 remove(path.join(folder_path, file))
                 print(f"Deleted file {file}")
 
