@@ -30,7 +30,7 @@ with DAG(dag_id='dag_that_triggers_another_dag', catchup=False, schedule_interva
     trigger_dag_task = TriggerDagRunOperator(
         task_id='trigger_dag_task',
         trigger_dag_id='simple_test_dag',
-        wait_for_completion=True,
+        wait_for_completion=False,
         deferrable=False,
     )
 
